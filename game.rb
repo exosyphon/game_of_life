@@ -43,3 +43,18 @@ class Game
     @board[row_index][column_index]
   end
 end
+
+class BoardPrinter
+  LIVE_CELL = "O"
+  DEAD_CELL = "."
+
+  def self.format(board)
+    board.map do |row|
+      row.map { |cell| cell.zero? ? DEAD_CELL : LIVE_CELL }.join(" ")
+    end.join("\n")
+  end
+
+  def self.print(board, io: $stdout)
+    io.puts(format(board))
+  end
+end

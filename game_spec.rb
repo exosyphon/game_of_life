@@ -1,4 +1,5 @@
 require_relative "./game"
+require "stringio"
 
 RSpec.describe Game do
   describe "#next_generation" do
@@ -54,6 +55,29 @@ RSpec.describe Game do
         [0, 0, 0],
         [0, 0, 0]
       ])
+    end
+  end
+end
+
+RSpec.describe BoardPrinter do
+  describe ".format" do
+    it "renders a board as terminal-friendly text" do
+      board = [
+        [0, 1, 0],
+        [1, 1, 1]
+      ]
+
+      expect(described_class.format(board)).to eq(". O .\nO O O")
+    end
+  end
+
+  describe ".print" do
+    it "writes the formatted board to an IO object" do
+      output = StringIO.new
+
+      described_class.print([[1, 0]], io: output)
+
+      expect(output.string).to eq("O .\n")
     end
   end
 end
